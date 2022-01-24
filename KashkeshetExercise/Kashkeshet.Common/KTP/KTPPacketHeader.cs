@@ -15,5 +15,19 @@ namespace Kashkeshet.Common.KTP
             PacketType = packetType;
             Headers = headers;
         }
+
+        public override string ToString()
+        {
+            string headers = string.Empty;
+
+            foreach(var header in Headers)
+            {
+                headers += $"{header.Key}: {header.Value}\r\n";
+            }
+
+            headers += "\r\n";
+
+            return $"{PacketType.ToString()} {headers.Length}\r\n";
+        }
     }
 }
