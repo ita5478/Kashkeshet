@@ -4,9 +4,14 @@ namespace Server.ConsoleUI
 {
     internal class Program
     {
-        static void Main(string[] args)
+        const int PORT = 6666;
+        static async void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Bootstrapper boot = new Bootstrapper();
+
+            var listener = boot.Initialize();
+
+            await listener.ListenForClients(PORT);
         }
     }
 }
