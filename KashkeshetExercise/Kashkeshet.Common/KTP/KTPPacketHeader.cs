@@ -10,7 +10,7 @@ namespace Kashkeshet.Common.KTP
 
         public readonly IDictionary<string, string> Headers;
 
-        public KTPPacketHeader(KTPPacketType packetType, IDictionary<string, string> headers, byte[] content = null)
+        public KTPPacketHeader(KTPPacketType packetType, IDictionary<string, string> headers)
         {
             PacketType = packetType;
             Headers = headers;
