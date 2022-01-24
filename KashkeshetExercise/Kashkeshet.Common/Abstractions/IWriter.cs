@@ -1,4 +1,4 @@
-﻿namespace Common.Abstractions
+﻿namespace Kashkeshet.Common.Abstractions
 {
     public interface IWriter<in T>
     {

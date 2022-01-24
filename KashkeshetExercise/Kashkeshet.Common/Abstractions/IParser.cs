@@ -1,5 +1,5 @@
 ﻿
-namespace Common.Abstractions
+namespace Kashkeshet.Common.Abstractions
 {
     public interface IParser<out T>
     {
