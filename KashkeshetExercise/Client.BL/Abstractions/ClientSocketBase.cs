@@ -16,6 +16,6 @@ namespace Client.BL.Abstractions
 
         public abstract Task SendDataAsync(byte[] data);
 
-        public abstract Task<byte[]> ReceiveDataAsync();
+        public abstract Task<byte[]> ReceiveDataAsync(uint bufferSize);
     }
 }
