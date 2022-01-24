@@ -25,7 +25,7 @@
 3. Names of files/code-components/projects should be written like the original.
 
 --------------------------------
-# Kashkeshet Packets Protocol
+# Kashkeshet Transfer Protocol
 --------------------------------
 # Packet Structure:
 TYPE <Headers-length> \r\n
