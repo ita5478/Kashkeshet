@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Server.BL.Abstractions
+namespace Kashkeshet.Common.Abstractions
 {
     public interface ISocketStream
     {
