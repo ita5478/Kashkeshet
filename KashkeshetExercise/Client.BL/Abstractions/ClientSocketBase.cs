@@ -12,7 +12,7 @@ namespace Client.BL.Abstractions
 
         public abstract Task<bool> ConnectAsync(IPAddress address, int port);
 
-        public abstract void Disconnect();
+        public abstract void Close();
 
         public abstract Task SendDataAsync(byte[] data);
 
