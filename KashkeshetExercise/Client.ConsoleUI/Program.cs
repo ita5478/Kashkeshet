@@ -15,11 +15,9 @@ namespace Client.ConsoleUI
         const string NAME = "user1";
         static void Main(string[] args)
         {
-            var stringToByteArrayConverter = new StringToByteArrayConverter();
-            var headerParser = new HeadersParser();
-
-            var initializer = new ServerConnectionInitializer(stringToByteArrayConverter, headerParser);
-
+            Bootstrapper boot = new Bootstrapper();
+            var initializer = boot.Initialize();
+            
             try
             {
                 var socketStream = initializer.ConnectAsync(IPAddress.Parse("127.0.0.1"), 6666, NAME).GetAwaiter().GetResult();
