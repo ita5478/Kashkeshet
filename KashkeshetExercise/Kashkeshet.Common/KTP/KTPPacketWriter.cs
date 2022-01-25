@@ -23,7 +23,7 @@ namespace Kashkeshet.Common.KTP
 
             foreach(var header in data.Headers)
             {
-                headers += $"{header.Key}: {header.Value}\r\n";
+                headers += $"{header.Key}:{header.Value}\r\n";
             }
 
             headers += "\r\n";
