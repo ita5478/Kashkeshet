@@ -1,7 +1,6 @@
 ﻿using Kashkeshet.Common.Abstractions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Kashkeshet.Common.KTP
@@ -13,8 +12,8 @@ namespace Kashkeshet.Common.KTP
         private IParser<IDictionary<string, string>> _headersParser;
 
         public KTPPacketReader(
-            ISocketStream socketStream, 
-            IConverter<string, byte[]> stringToByteArrayConverter, 
+            ISocketStream socketStream,
+            IConverter<string, byte[]> stringToByteArrayConverter,
             IParser<IDictionary<string, string>> headersParser)
         {
             _socketStream = socketStream;
@@ -26,17 +25,17 @@ namespace Kashkeshet.Common.KTP
         {
             var mainHeader = await ReadMainHeaderAsync();
 
-            mainHeader =  mainHeader.Replace("\r\n", String.Empty);
+            mainHeader = mainHeader.Replace("\r\n", String.Empty);
             var partsOfHeader = mainHeader.Split(' ');
 
-            KTPPacketType packetType = (KTPPacketType) Enum.Parse(typeof(KTPPacketType), partsOfHeader[0]);
+            KTPPacketType packetType = (KTPPacketType)Enum.Parse(typeof(KTPPacketType), partsOfHeader[0]);
             int headersLength = int.Parse(partsOfHeader[1]);
 
             var bytes = await _socketStream.ReadAsync(headersLength);
             string a = _stringToByteArrayConverter.ConvertFrom(bytes);
             var headers = _headersParser.Parse(a);
 
-            return new KTPPacket (packetType, headers, await ReadContentBytesAsync(headers));
+            return new KTPPacket(packetType, headers, await ReadContentBytesAsync(headers));
         }
 
         private async Task<string> ReadMainHeaderAsync()

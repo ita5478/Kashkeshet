@@ -29,7 +29,7 @@ namespace Server.BL.Implementation
 
             while (_running)
             {
-                var clientStream = new TcpSocketStream((await _listener.AcceptTcpClientAsync()) .GetStream());
+                var clientStream = new TcpSocketStream((await _listener.AcceptTcpClientAsync()).GetStream());
                 _writer.Write("A new connection has been accepted. Starting registry procedure.");
                 _userRegistry.Register(clientStream);
             }

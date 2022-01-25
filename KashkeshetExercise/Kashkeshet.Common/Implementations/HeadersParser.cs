@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Kashkeshet.Common.Implementations
 {
@@ -8,7 +6,7 @@ namespace Kashkeshet.Common.Implementations
     {
         public Dictionary<string, string> Parse(string data)
         {
-            Dictionary<string , string> result = new Dictionary<string,string>();
+            Dictionary<string, string> result = new Dictionary<string, string>();
 
             var headers = data.Split("\r\n");
             foreach (var header in headers)

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Server.ConsoleUI
+﻿namespace Server.ConsoleUI
 {
     internal class Program
     {

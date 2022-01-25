@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client.BL", "Client.BL\Clie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{3E47EAAE-2DF6-4009-9946-FB9E4DB36610}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.ConsoleUI", "Client.ConsoleUI\Client.ConsoleUI.csproj", "{A9A744E8-3861-4B09-BD72-6F681D63CC45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client.ConsoleUI", "Client.ConsoleUI\Client.ConsoleUI.csproj", "{A9A744E8-3861-4B09-BD72-6F681D63CC45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,14 +1,11 @@
 ﻿using Client.BL.Abstractions;
 using Client.BL.Exceptions;
 using Kashkeshet.Common.Abstractions;
-using Kashkeshet.Common.Implementations;
 using Kashkeshet.Common.KTP;
 using Server.BL.Implementation;
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Client.BL.Implementation
@@ -60,7 +57,7 @@ namespace Client.BL.Implementation
                     {
                         throw new ServerConnectionFailureException();
                     }
-                    
+
                 }
             }
             else

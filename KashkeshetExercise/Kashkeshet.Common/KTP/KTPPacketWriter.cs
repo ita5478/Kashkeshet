@@ -1,7 +1,4 @@
 ﻿using Kashkeshet.Common.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Kashkeshet.Common.KTP
@@ -21,7 +18,7 @@ namespace Kashkeshet.Common.KTP
         {
             string headers = string.Empty;
 
-            foreach(var header in data.Headers)
+            foreach (var header in data.Headers)
             {
                 headers += $"{header.Key}:{header.Value}\r\n";
             }
@@ -32,8 +29,8 @@ namespace Kashkeshet.Common.KTP
             var packetBytes = _converter.ConvertTo(packet);
 
             await _socketStream.WriteAsync(packetBytes);
-            
-            if(data.Content != null  &&  data.Content.Length > 0)
+
+            if (data.Content != null && data.Content.Length > 0)
             {
                 await _socketStream.WriteAsync(data.Content);
             }

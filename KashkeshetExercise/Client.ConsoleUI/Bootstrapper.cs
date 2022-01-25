@@ -1,9 +1,5 @@
-﻿using Client.BL.Abstractions;
-using Client.BL.Implementation;
+﻿using Client.BL.Implementation;
 using Kashkeshet.Common.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Client.ConsoleUI
 {
