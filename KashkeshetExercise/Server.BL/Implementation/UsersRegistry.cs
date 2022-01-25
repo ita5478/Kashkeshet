@@ -11,21 +11,24 @@ namespace Server.BL.Implementation
 {
     public class UsersRegistry : IUserRegistry
     {
-        private ConcurrentDictionary<string, IClientHandler> _registeredClients;
+        private ConcurrentDictionary<string, ClientHandler> _registeredClients;
         private IParser<IDictionary<string, string>> _headersParser;
         private IConverter<string, byte[]> _stringToByteArrayConverter;
         private IWriter<string> _writer;
-        public UsersRegistry(IWriter<string> writer)
+        private IClientHandlerFactory _clientHandlerFactory;
+
+        public UsersRegistry(IClientHandlerFactory clientHandlerFactory, IWriter<string> writer)
         {
-            _registeredClients = new ConcurrentDictionary<string, IClientHandler>();
+            _registeredClients = new ConcurrentDictionary<string, ClientHandler>();
             _headersParser = new HeadersParser();
             _stringToByteArrayConverter = new StringToByteArrayConverter();
             _writer = writer;
+            _clientHandlerFactory = clientHandlerFactory;
         }
 
-        public ISocketStream GetUserStream(string userName)
+        public IWriterAsync<KTPPacket> GetUserWriter(string userName)
         {
-            throw new NotImplementedException();
+            return _registeredClients[userName].PacketsWriter;
         }
 
         public async Task Register(ISocketStream userStream)
@@ -51,12 +54,14 @@ namespace Server.BL.Implementation
                     string username = retPacket.Headers["Identify-As"];
                     if (!string.IsNullOrEmpty(username) && !_registeredClients.ContainsKey(retPacket.Headers["Identify-As"]))
                     {
-                        _registeredClients[username] = null;
                         registryCompleted = true;
                         headers["Response-Type"] = "acknowledgement";
                         headers["Response-Message"] = $"The user {username} was succussfully registered.";
                         _writer.Write($"A new user by the name {username} has connected!");
                         await packetWriter.WriteAsync(new KTPPacket(KTPPacketType.RES, headers));
+
+                        _registeredClients[username] = (ClientHandler)_clientHandlerFactory.Create(packetWriter, packetReader, username);
+                        StartClientHandler(username).Start();
                     }
                     else
                     {
@@ -65,9 +70,17 @@ namespace Server.BL.Implementation
                         await packetWriter.WriteAsync(new KTPPacket(KTPPacketType.RES, headers));
                         userStream.Close();
                     }
-
-
                 }
+            }
+        }
+
+        private async Task StartClientHandler(string userName)
+        {
+            await _registeredClients[userName].HandleClient();
+            ClientHandler clientHandler;
+            while(!_registeredClients.TryRemove(userName, out clientHandler))
+            {
+                await Task.Delay(100);
             }
         }
     }
