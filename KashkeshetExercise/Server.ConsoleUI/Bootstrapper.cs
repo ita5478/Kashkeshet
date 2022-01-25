@@ -11,7 +11,8 @@ namespace Server.ConsoleUI
         public IClientListener Initialize()
         {
             var writer = new Implementation.ConsoleWriter();
-            var listener = new TcpSocketClientListener(writer);
+            var registry = new UsersRegistry(writer);
+            var listener = new TcpSocketClientListener(writer, registry);
 
             return listener;
         }
