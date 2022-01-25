@@ -1,7 +1,7 @@
 ﻿using Kashkeshet.Common.Abstractions;
 using System.Text;
 
-namespace Kashkeshet.Common.Implementations.Converters
+namespace Kashkeshet.Common.Implementations
 {
     public class StringToByteArrayConverter : IConverter<string, byte[]>
     {
