@@ -9,6 +9,6 @@ namespace Client.BL.Abstractions
 {
     public interface IConnectionInitializer
     {
-        public Task<ISocketStream> ConnectAsync(IPAddress ip, int port);
+        public Task<ISocketStream> ConnectAsync(IPAddress ip, int port, string username);
     }
 }
