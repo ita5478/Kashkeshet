@@ -13,9 +13,11 @@ namespace Kashkeshet.Common.Implementations
             var headers = data.Split("\r\n");
             foreach (var header in headers)
             {
-                var parts = header.Split(':');
-
-                result[parts[0]] = parts[1];
+                if (!string.IsNullOrEmpty(header))
+                {
+                    var parts = header.Split(':');
+                    result[parts[0]] = parts[1];
+                }
             }
 
             return result;
