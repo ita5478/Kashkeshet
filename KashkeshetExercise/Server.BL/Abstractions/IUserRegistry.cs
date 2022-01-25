@@ -1,4 +1,5 @@
 ﻿using Kashkeshet.Common.Abstractions;
+using Kashkeshet.Common.KTP;
 using System.Threading.Tasks;
 
 namespace Server.BL.Abstractions
@@ -7,6 +8,6 @@ namespace Server.BL.Abstractions
     {
         Task Register(ISocketStream userStream);
 
-        ISocketStream GetUserStream(string userName);
+        IWriterAsync<KTPPacket> GetUserWriter(string userName);
     }
 }
