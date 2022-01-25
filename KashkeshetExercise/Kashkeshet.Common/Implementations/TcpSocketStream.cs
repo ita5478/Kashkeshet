@@ -1,4 +1,4 @@
-﻿using Server.BL.Abstractions;
+﻿using Kashkeshet.Common.Abstractions;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -16,7 +16,6 @@ namespace Server.BL.Implementation
         public void Close()
         {
             _socketStream.Close();
-            TcpClient client = new TcpClient();
         }
 
         public async Task<byte[]> ReadAsync(int bufferSize)
