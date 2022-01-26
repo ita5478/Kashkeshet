@@ -20,7 +20,7 @@ namespace Kashkeshet.Common.Implementations
             try
             {
                 string channel = string.Empty;
-                if(input.PacketType is KTPPacketType.REQ)
+                if (input.PacketType is KTPPacketType.REQ)
                 {
                     if (input.Headers["Request-Type"].Equals("send-direct"))
                     {

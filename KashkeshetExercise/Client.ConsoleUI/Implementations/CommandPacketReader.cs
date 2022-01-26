@@ -1,7 +1,6 @@
 ﻿using Kashkeshet.Common.Abstractions;
 using Kashkeshet.Common.KTP;
 using System;
-using System.Collections.Generic;
 
 namespace Client.ConsoleUI.Implementations
 {
@@ -28,7 +27,7 @@ namespace Client.ConsoleUI.Implementations
                 var packet = _commandParser.Parse(command);
                 return packet;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _writer.Write(e.Message);
                 return null;
