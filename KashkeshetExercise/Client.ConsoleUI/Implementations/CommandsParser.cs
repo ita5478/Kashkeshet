@@ -42,6 +42,7 @@ namespace Client.ConsoleUI.Implementations
             }
             messageContent = messageContent.Trim();
             headers["Content-Length"] = messageContent.Length.ToString();
+            headers["Content-Type"] = "Text";
             return new KTPPacket(KTPPacketType.REQ, headers, _stringToByteArrayConverter.ConvertTo(messageContent));
         }
     }
