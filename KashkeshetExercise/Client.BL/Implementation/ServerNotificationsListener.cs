@@ -38,7 +38,7 @@ namespace Client.BL.Implementation
                         case "new-direct":
                         case "new-message":
                             var message = _messageToPacketConverter.ConvertFrom(packet);
-                            _writer.Write($"({message.ChatName}) {message.Sender}: {message.Content}");
+                            _writer.Write($"({message.ChatName}) {message.Sender}: {_stringToByteArrayConverter.ConvertFrom(message.Content)}");
                             break;
                         case "user-joined":
                         case "user-left":
