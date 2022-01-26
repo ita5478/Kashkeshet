@@ -11,13 +11,16 @@ namespace Client.BL.Implementation
         private bool isListening;
         private IConverter<ChatMessage, KTPPacket> _messageToPacketConverter;
         private IWriter<string> _writer;
+        private IConverter<string, byte[]> _stringToByteArrayConverter;
 
         public ServerNotificationsListener(
-            IConverter<ChatMessage, KTPPacket> messageToPacketConverter,
-            IWriter<string> writer)
+            IConverter<ChatMessage, KTPPacket> messageToPacketConverter, 
+            IWriter<string> writer, 
+            IConverter<string, byte[]> stringToByteArrayConverter)
         {
             _messageToPacketConverter = messageToPacketConverter;
             _writer = writer;
+            _stringToByteArrayConverter = stringToByteArrayConverter;
         }
 
         public async Task ListenForServerNotifications(IReaderAsync<KTPPacket> packetsReader)
@@ -30,8 +33,18 @@ namespace Client.BL.Implementation
 
                 if (packet.PacketType is KTPPacketType.PUSH)
                 {
-                    var message = _messageToPacketConverter.ConvertFrom(packet);
-                    _writer.Write($"({message.ChatName}) {message.Sender}: {message.Content}");
+                    switch (packet.Headers["Event-Type"])
+                    {
+                        case "new-message":
+                            var message = _messageToPacketConverter.ConvertFrom(packet);
+                            _writer.Write($"({message.ChatName}) {message.Sender}: {message.Content}");
+                            break;
+                        case "user-joined":
+                        case "user-left":
+                            var announcement = _stringToByteArrayConverter.ConvertFrom(packet.Content);
+                            _writer.Write(announcement);
+                            break;
+                    }
                 }
             }
         }
