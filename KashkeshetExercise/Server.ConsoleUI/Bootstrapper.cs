@@ -12,7 +12,7 @@ namespace Server.ConsoleUI
         {
             // Converters
             var stringToByteArrayConverter = new StringToByteArrayConverter();
-            var chatMessageToPacketConverter = new ChatMessageToPacketConverter(stringToByteArrayConverter);
+            var chatMessageToPacketConverter = new ChatMessageToPacketConverter();
 
             var writer = new Implementation.ConsoleWriter();
             var headersParser = new HeadersParser();
