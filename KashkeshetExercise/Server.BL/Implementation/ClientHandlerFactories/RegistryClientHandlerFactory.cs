@@ -32,11 +32,11 @@ namespace Server.BL.Implementation
         public IClientHandler Create(ISocketStream clientStream)
         {
             return new RegisteryClientHandler(
-                _usersRegistry, 
-                _writer, 
-                clientStream, 
-                _clientHandlerFactory, 
-                _headersParser, 
+                _usersRegistry,
+                _writer,
+                clientStream,
+                _clientHandlerFactory,
+                _headersParser,
                 _stringToByteArrayConverter,
                 _userStatusAnnouncer);
         }

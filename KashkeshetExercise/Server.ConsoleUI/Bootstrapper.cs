@@ -28,10 +28,10 @@ namespace Server.ConsoleUI
 
             var clientHandlerFactory = new ClientHandlerFactory(requestHandlersDictionary, writer, headersParser, stringToByteArrayConverter);
             var registryHandlerFactory = new RegistryClientHandlerFactory(
-                headersParser, 
-                stringToByteArrayConverter, 
-                clientHandlerFactory, 
-                registry, 
+                headersParser,
+                stringToByteArrayConverter,
+                clientHandlerFactory,
+                registry,
                 writer,
                 statusAnnouncer);
 

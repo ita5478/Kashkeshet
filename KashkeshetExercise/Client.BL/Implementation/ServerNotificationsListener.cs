@@ -14,8 +14,8 @@ namespace Client.BL.Implementation
         private IConverter<string, byte[]> _stringToByteArrayConverter;
 
         public ServerNotificationsListener(
-            IConverter<ChatMessage, KTPPacket> messageToPacketConverter, 
-            IWriter<string> writer, 
+            IConverter<ChatMessage, KTPPacket> messageToPacketConverter,
+            IWriter<string> writer,
             IConverter<string, byte[]> stringToByteArrayConverter)
         {
             _messageToPacketConverter = messageToPacketConverter;

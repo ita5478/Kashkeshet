@@ -3,7 +3,6 @@ using Kashkeshet.Common.KTP;
 using Server.BL.Abstractions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Server.BL.Implementation
 {
@@ -52,7 +51,7 @@ namespace Server.BL.Implementation
         private void SendPacket(KTPPacket packet)
         {
             List<IWriterAsync<KTPPacket>> usersWriters = new List<IWriterAsync<KTPPacket>>();
-            foreach(var user in _userRegistry.GetAllUsers())
+            foreach (var user in _userRegistry.GetAllUsers())
             {
                 usersWriters.Add(_userRegistry.GetUserHandler(user).GetClientWriter());
             }
