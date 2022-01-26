@@ -11,24 +11,34 @@ namespace Server.BL.Implementation
         private IClientHandlerFactory _clientHandlerFactory;
         private IUserRegistry _usersRegistry;
         private IWriter<string> _writer;
+        private IUserStatusAnnouncer _userStatusAnnouncer;
 
         public RegistryClientHandlerFactory(
             IParser<IDictionary<string, string>> headersParser,
             IConverter<string, byte[]> stringToByteArrayConverter,
             IClientHandlerFactory clientHandlerFactory,
             IUserRegistry usersRegistry,
-            IWriter<string> writer)
+            IWriter<string> writer,
+            IUserStatusAnnouncer userStatusAnnouncer)
         {
             _headersParser = headersParser;
             _stringToByteArrayConverter = stringToByteArrayConverter;
             _clientHandlerFactory = clientHandlerFactory;
             _usersRegistry = usersRegistry;
             _writer = writer;
+            _userStatusAnnouncer = userStatusAnnouncer;
         }
 
         public IClientHandler Create(ISocketStream clientStream)
         {
-            return new RegisteryClientHandler(_usersRegistry, _writer, clientStream, _clientHandlerFactory, _headersParser, _stringToByteArrayConverter);
+            return new RegisteryClientHandler(
+                _usersRegistry, 
+                _writer, 
+                clientStream, 
+                _clientHandlerFactory, 
+                _headersParser, 
+                _stringToByteArrayConverter,
+                _userStatusAnnouncer);
         }
     }
 }
