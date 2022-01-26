@@ -1,6 +1,7 @@
 ﻿using Kashkeshet.Common.Abstractions;
 using Kashkeshet.Common.KTP;
 using Server.BL.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,21 +30,28 @@ namespace Server.BL.Implementation
             // important - HandleClient should not leak any errors!
             IsActive = true;
 
-            while (IsActive)
+            try
             {
-                var incomingPacket = await _packetsReader.ReadAsync();
-
-                if (incomingPacket.PacketType is KTPPacketType.REQ)
+                while (IsActive)
                 {
-                    try
+                    var incomingPacket = await _packetsReader.ReadAsync();
+
+                    if (incomingPacket.PacketType is KTPPacketType.REQ)
                     {
-                        await _requestHandlingDictionary[incomingPacket.Headers["Request-Type"]].HandleRequest(incomingPacket);
-                    }
-                    catch (KeyNotFoundException)
-                    {
-                        await SendErrorResponse("Invalid request");
+                        try
+                        {
+                            await _requestHandlingDictionary[incomingPacket.Headers["Request-Type"]].HandleRequest(incomingPacket);
+                        }
+                        catch (KeyNotFoundException)
+                        {
+                            await SendErrorResponse("Invalid request");
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                // output to log
             }
         }
 
