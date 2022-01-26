@@ -11,20 +11,17 @@ namespace Server.BL.Implementation
     public class ClientHandler : IClientHandler
     {
         public bool IsActive { get; private set; }
-        public IWriterAsync<KTPPacket> PacketsWriter;
         
-        private string _userName;
+        private IWriterAsync<KTPPacket> _packetsWriter;
         private IReaderAsync<KTPPacket> _packetsReader;
         private IDictionary<string, IRequestHandler> _requestHandlingDictionary;
 
         public ClientHandler(
-            string userName, 
             IWriterAsync<KTPPacket> packetsWriter, 
             IReaderAsync<KTPPacket> packetsReader, 
             IDictionary<string, IRequestHandler> requestHandlingDictionary)
         {
-            _userName = userName;
-            PacketsWriter = packetsWriter;
+            _packetsWriter = packetsWriter;
             _packetsReader = packetsReader;
             _requestHandlingDictionary = requestHandlingDictionary;
         }
@@ -60,7 +57,12 @@ namespace Server.BL.Implementation
                             {"Error-Message", errorMessage }
                         };
 
-            await PacketsWriter.WriteAsync(new KTPPacket(KTPPacketType.RES, headers));
+            await _packetsWriter.WriteAsync(new KTPPacket(KTPPacketType.RES, headers));
+        }
+
+        public IWriterAsync<KTPPacket> GetClientWriter()
+        {
+            return _packetsWriter;
         }
     }
 }
