@@ -10,7 +10,7 @@ namespace Client.ConsoleUI
         public IClientRunner Initialize()
         {
             var stringToByteArrayConverter = new StringToByteArrayConverter();
-            var messageToPacketConverter = new ChatMessageToPacketConverter(stringToByteArrayConverter);
+            var messageToPacketConverter = new ChatMessageToPacketConverter();
 
             var headerParser = new HeadersParser();
             var commandsParser = new CommandsParser(stringToByteArrayConverter);
