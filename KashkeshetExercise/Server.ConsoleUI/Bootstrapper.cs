@@ -19,6 +19,7 @@ namespace Server.ConsoleUI
 
             var registry = new UsersRegistry();
             var messageBroadcaster = new MessageBroadcaster();
+            var statusAnnouncer = new UserStatusAnnouncer(registry, messageBroadcaster, stringToByteArrayConverter);
 
             var requestHandlersDictionary = new Dictionary<string, IRequestHandler>()
             {
@@ -26,7 +27,14 @@ namespace Server.ConsoleUI
             };
 
             var clientHandlerFactory = new ClientHandlerFactory(requestHandlersDictionary, writer, headersParser, stringToByteArrayConverter);
-            var registryHandlerFactory = new RegistryClientHandlerFactory(headersParser, stringToByteArrayConverter, clientHandlerFactory, registry, writer);
+            var registryHandlerFactory = new RegistryClientHandlerFactory(
+                headersParser, 
+                stringToByteArrayConverter, 
+                clientHandlerFactory, 
+                registry, 
+                writer,
+                statusAnnouncer);
+
             var listener = new TcpSocketClientListener(writer, registryHandlerFactory);
 
             return listener;
