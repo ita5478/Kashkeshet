@@ -33,7 +33,8 @@ namespace Server.BL.Implementation.RequestHandlers
                 recipientWriters.Add(_userRegistry.GetUserHandler(recipient).GetClientWriter());
             }
 
-            _messageBroadcaster.BroadcastMessage(_messageToPacketConverter.ConvertTo(message), recipientWriters);
+            var packet = _messageToPacketConverter.ConvertTo(message);
+            _messageBroadcaster.BroadcastMessage(packet, recipientWriters);
             return Task.CompletedTask;
         }
     }
