@@ -19,7 +19,7 @@ namespace Client.ConsoleUI
             var messagePacketReader = new MessagePacketReader(consoleWriter, consoleReader, stringToByteArrayConverter);
 
             var initializer = new ServerConnectionInitializer(stringToByteArrayConverter, headerParser);
-            var notificationListener = new ServerNotificationsListener(messageToPacketConverter, consoleWriter);
+            var notificationListener = new ServerNotificationsListener(messageToPacketConverter, consoleWriter, stringToByteArrayConverter);
 
             return new ClientRunner(initializer, notificationListener, stringToByteArrayConverter, headerParser, messagePacketReader);
         }
