@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Client.ConsoleUI.Implementations
 {
-    public class MessagePacketReader : IReader<KTPPacket>
+    public class CommandPacketReader : IReader<KTPPacket>
     {
         private IWriter<string> _writer;
         private IReader<string> _reader;
         private IConverter<string, byte[]> _stringToByteArrayConverter;
 
-        public MessagePacketReader(IWriter<string> writer, IReader<string> reader, IConverter<string, byte[]> stringToByteArrayConverter)
+        public CommandPacketReader(IWriter<string> writer, IReader<string> reader, IConverter<string, byte[]> stringToByteArrayConverter)
         {
             _writer = writer;
             _reader = reader;

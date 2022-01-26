@@ -16,7 +16,7 @@ namespace Client.ConsoleUI
 
             var consoleWriter = new ConsoleWriter();
             var consoleReader = new ConsoleReader();
-            var messagePacketReader = new MessagePacketReader(consoleWriter, consoleReader, stringToByteArrayConverter);
+            var messagePacketReader = new CommandPacketReader(consoleWriter, consoleReader, stringToByteArrayConverter);
 
             var initializer = new ServerConnectionInitializer(stringToByteArrayConverter, headerParser);
             var notificationListener = new ServerNotificationsListener(messageToPacketConverter, consoleWriter, stringToByteArrayConverter);
