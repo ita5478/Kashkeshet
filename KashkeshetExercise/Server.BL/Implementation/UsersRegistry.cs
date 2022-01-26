@@ -18,6 +18,11 @@ namespace Server.BL.Implementation
             _registeredClients = new ConcurrentDictionary<string, IClientHandler>();
         }
 
+        public ICollection<string> GetAllUsers()
+        {
+            return _registeredClients.Keys;
+        }
+
         public IClientHandler GetUserHandler(string userName)
         {
             return _registeredClients[userName];

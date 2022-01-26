@@ -1,5 +1,6 @@
 ﻿using Kashkeshet.Common.Abstractions;
 using Kashkeshet.Common.KTP;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Server.BL.Abstractions
@@ -13,5 +14,7 @@ namespace Server.BL.Abstractions
         bool IsUserRegistered(string username);
 
         IClientHandler GetUserHandler(string userName);
+
+        ICollection<string> GetAllUsers();
     }
 }
