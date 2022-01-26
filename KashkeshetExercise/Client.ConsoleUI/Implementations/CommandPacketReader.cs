@@ -9,28 +9,30 @@ namespace Client.ConsoleUI.Implementations
     {
         private IWriter<string> _writer;
         private IReader<string> _reader;
-        private IConverter<string, byte[]> _stringToByteArrayConverter;
+        private IParser<KTPPacket> _commandParser;
 
-        public CommandPacketReader(IWriter<string> writer, IReader<string> reader, IConverter<string, byte[]> stringToByteArrayConverter)
+        public CommandPacketReader(IWriter<string> writer, IReader<string> reader, IParser<KTPPacket> commandParser)
         {
             _writer = writer;
             _reader = reader;
-            _stringToByteArrayConverter = stringToByteArrayConverter;
+            _commandParser = commandParser;
         }
 
         public KTPPacket Read()
         {
-            _writer.Write("Enter the message you want to send:");
-            string message = _reader.Read();
+            _writer.Write("Enter the command you want to send to the server");
+            string command = _reader.Read();
 
-            Dictionary<string, string> headers = new Dictionary<string, string>()
+            try
             {
-                {"Date", DateTime.Now.ToLongDateString() },
-                {"Request-Type", "send" },
-                {"Content-Length", message.Length.ToString()}
-            };
-
-            return new KTPPacket(KTPPacketType.REQ, headers, _stringToByteArrayConverter.ConvertTo(message));
+                var packet = _commandParser.Parse(command);
+                return packet;
+            }
+            catch(Exception e)
+            {
+                _writer.Write(e.Message);
+                return null;
+            }
         }
     }
 }
