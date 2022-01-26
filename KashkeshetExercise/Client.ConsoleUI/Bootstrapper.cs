@@ -13,10 +13,11 @@ namespace Client.ConsoleUI
             var messageToPacketConverter = new ChatMessageToPacketConverter(stringToByteArrayConverter);
 
             var headerParser = new HeadersParser();
+            var commandsParser = new CommandsParser(stringToByteArrayConverter);
 
             var consoleWriter = new ConsoleWriter();
             var consoleReader = new ConsoleReader();
-            var messagePacketReader = new CommandPacketReader(consoleWriter, consoleReader, stringToByteArrayConverter);
+            var messagePacketReader = new CommandPacketReader(consoleWriter, consoleReader, commandsParser);
 
             var initializer = new ServerConnectionInitializer(stringToByteArrayConverter, headerParser);
             var notificationListener = new ServerNotificationsListener(messageToPacketConverter, consoleWriter, stringToByteArrayConverter);
