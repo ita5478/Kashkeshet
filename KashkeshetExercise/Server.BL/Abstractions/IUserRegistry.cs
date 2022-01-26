@@ -6,8 +6,12 @@ namespace Server.BL.Abstractions
 {
     public interface IUserRegistry
     {
-        Task Register(ISocketStream userStream);
+        void Register(string username, IClientHandler userHandler);
 
-        IWriterAsync<KTPPacket> GetUserWriter(string userName);
+        bool Unregister(string username);
+
+        bool IsUserRegistered(string username);
+
+        IClientHandler GetUserHandler(string userName);
     }
 }
