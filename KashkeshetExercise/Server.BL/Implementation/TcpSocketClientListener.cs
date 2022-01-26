@@ -11,12 +11,12 @@ namespace Server.BL.Implementation
         private IWriter<string> _writer;
         private TcpListener _listener;
         private bool _running;
-        private IUserRegistry _userRegistry;
+        private IClientHandlerFactory _registryClientHandlerFactory;
 
-        public TcpSocketClientListener(IWriter<string> writer, IUserRegistry userRegistry)
+        public TcpSocketClientListener(IWriter<string> writer, IClientHandlerFactory registryClientHandlerFactory)
         {
             _writer = writer;
-            _userRegistry = userRegistry;
+            _registryClientHandlerFactory = registryClientHandlerFactory;
         }
 
         public async Task ListenForClients(int port)
@@ -31,7 +31,8 @@ namespace Server.BL.Implementation
             {
                 var clientStream = new TcpSocketStream((await _listener.AcceptTcpClientAsync()).GetStream());
                 _writer.Write("A new connection has been accepted. Starting registry procedure.");
-                _userRegistry.Register(clientStream);
+                var registryHandler = _registryClientHandlerFactory.Create(clientStream);
+                registryHandler.HandleClient();
             }
 
         }
