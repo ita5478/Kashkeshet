@@ -14,6 +14,7 @@ namespace Server.BL.Implementation
         private IClientHandlerFactory _clientHandlerFactory;
         private IParser<IDictionary<string, string>> _headersParser;
         private IConverter<string, byte[]> _stringToByteArrayConverter;
+        private IUserStatusAnnouncer _userStatusAnnouncer;
 
         public RegisteryClientHandler(
             IUserRegistry usersRegistry,
@@ -21,7 +22,8 @@ namespace Server.BL.Implementation
             ISocketStream socketStream,
             IClientHandlerFactory clientHandlerFactory,
             IParser<IDictionary<string, string>> headersParser,
-            IConverter<string, byte[]> stringToByteArrayConverter)
+            IConverter<string, byte[]> stringToByteArrayConverter,
+            IUserStatusAnnouncer userStatusAnnouncer)
         {
             _usersRegistry = usersRegistry;
             _writer = writer;
@@ -29,6 +31,7 @@ namespace Server.BL.Implementation
             _clientHandlerFactory = clientHandlerFactory;
             _headersParser = headersParser;
             _stringToByteArrayConverter = stringToByteArrayConverter;
+            _userStatusAnnouncer = userStatusAnnouncer;
         }
 
         public async Task HandleClient()
@@ -73,11 +76,13 @@ namespace Server.BL.Implementation
 
         private async Task StartClientHandler(string userName)
         {
+            _userStatusAnnouncer.AnnounceConnection(userName);
             await _usersRegistry.GetUserHandler(userName).HandleClient();
             while (_usersRegistry.IsUserRegistered(userName) && !_usersRegistry.Unregister(userName))
             {
                 await Task.Delay(100);
             }
+            _userStatusAnnouncer.AnnounceDisconnection(userName);
         }
 
         public IWriterAsync<KTPPacket> GetClientWriter()
