@@ -21,7 +21,7 @@ namespace Client.DAL
             await _fileStream.WriteAsync(data);
         }
 
-        async ValueTask IAsyncDisposable.DisposeAsync()
+        public async ValueTask DisposeAsync()
         {
             await _fileStream.FlushAsync();
             await _fileStream.DisposeAsync();
