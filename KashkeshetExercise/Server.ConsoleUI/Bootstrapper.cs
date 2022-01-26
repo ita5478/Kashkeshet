@@ -23,7 +23,7 @@ namespace Server.ConsoleUI
 
             var requestHandlersDictionary = new Dictionary<string, IRequestHandler>()
             {
-                {"send", new SendMessageRequestHandler(messageBroadcaster, registry, chatMessageToPacketConverter) }
+                {"send", new SendBroadcastRequestHandler(messageBroadcaster, registry, chatMessageToPacketConverter) }
             };
 
             var clientHandlerFactory = new ClientHandlerFactory(requestHandlersDictionary, writer, headersParser, stringToByteArrayConverter);

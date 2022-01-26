@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Server.BL.Implementation.RequestHandlers
 {
-    public class SendMessageRequestHandler : IRequestHandler
+    public class SendBroadcastRequestHandler : IRequestHandler
     {
         private IMessageBroadcaster _messageBroadcaster;
         private IUserRegistry _userRegistry;
         private IConverter<ChatMessage, KTPPacket> _messageToPacketConverter;
 
-        public SendMessageRequestHandler(
+        public SendBroadcastRequestHandler(
             IMessageBroadcaster messageBroadcaster,
             IUserRegistry userRegistry,
             IConverter<ChatMessage, KTPPacket> messageToPacketConverter)
