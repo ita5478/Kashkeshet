@@ -35,6 +35,7 @@ namespace Client.BL.Implementation
                 {
                     switch (packet.Headers["Event-Type"])
                     {
+                        case "new-direct":
                         case "new-message":
                             var message = _messageToPacketConverter.ConvertFrom(packet);
                             _writer.Write($"({message.ChatName}) {message.Sender}: {message.Content}");
