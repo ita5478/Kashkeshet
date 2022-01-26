@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Client.ConsoleUI": {
+      "commandName": "Project",
+      "commandLineArgs": "user1"
+    }
+  }
+}
