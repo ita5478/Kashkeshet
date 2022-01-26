@@ -29,7 +29,7 @@ namespace Client.ConsoleUI.Implementations
                 if (data.StartsWith('<'))
                 {
                     headers["Request-Type"] = "send-direct";
-                    string targetUser = data.Substring(1, data.IndexOf('>'));
+                    string targetUser = data.Substring(1, data.IndexOf('>') - 1);
                     headers["Message-Type"] = "direct";
                     headers["Target-User"] = targetUser;
                     messageContent = data.Substring(data.IndexOf('>') + 1);
@@ -41,6 +41,7 @@ namespace Client.ConsoleUI.Implementations
                     messageContent = data;
                 }
             }
+            messageContent = messageContent.Trim();
             headers["Content-Length"] = messageContent.Length.ToString();
             return new KTPPacket(KTPPacketType.REQ, headers, _stringToByteArrayConverter.ConvertTo(messageContent));
         }
