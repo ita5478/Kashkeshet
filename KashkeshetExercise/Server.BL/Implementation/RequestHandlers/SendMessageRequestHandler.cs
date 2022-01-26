@@ -2,9 +2,7 @@
 using Kashkeshet.Common.DTO;
 using Kashkeshet.Common.KTP;
 using Server.BL.Abstractions;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Server.BL.Implementation.RequestHandlers
@@ -16,8 +14,8 @@ namespace Server.BL.Implementation.RequestHandlers
         private IConverter<ChatMessage, KTPPacket> _messageToPacketConverter;
 
         public SendMessageRequestHandler(
-            IMessageBroadcaster messageBroadcaster, 
-            IUserRegistry userRegistry, 
+            IMessageBroadcaster messageBroadcaster,
+            IUserRegistry userRegistry,
             IConverter<ChatMessage, KTPPacket> messageToPacketConverter)
         {
             _messageBroadcaster = messageBroadcaster;
@@ -29,8 +27,8 @@ namespace Server.BL.Implementation.RequestHandlers
         {
             var message = _messageToPacketConverter.ConvertFrom(requestPacket);
             List<IWriterAsync<KTPPacket>> recipientWriters = new List<IWriterAsync<KTPPacket>>();
-            
-            foreach(var recipient in _userRegistry.GetAllUsers())
+
+            foreach (var recipient in _userRegistry.GetAllUsers())
             {
                 recipientWriters.Add(_userRegistry.GetUserHandler(recipient).GetClientWriter());
             }

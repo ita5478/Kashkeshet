@@ -2,9 +2,6 @@
 using Kashkeshet.Common.Abstractions;
 using Kashkeshet.Common.DTO;
 using Kashkeshet.Common.KTP;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Client.BL.Implementation
@@ -16,7 +13,7 @@ namespace Client.BL.Implementation
         private IWriter<string> _writer;
 
         public ServerNotificationsListener(
-            IConverter<ChatMessage, KTPPacket> messageToPacketConverter, 
+            IConverter<ChatMessage, KTPPacket> messageToPacketConverter,
             IWriter<string> writer)
         {
             _messageToPacketConverter = messageToPacketConverter;
@@ -30,8 +27,8 @@ namespace Client.BL.Implementation
             while (isListening)
             {
                 var packet = await packetsReader.ReadAsync();
-                
-                if(packet.PacketType is KTPPacketType.PUSH)
+
+                if (packet.PacketType is KTPPacketType.PUSH)
                 {
                     var message = _messageToPacketConverter.ConvertFrom(packet);
                     _writer.Write($"({message.ChatName}) {message.Sender}: {message.Content}");

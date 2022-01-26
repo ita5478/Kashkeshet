@@ -1,9 +1,7 @@
 ﻿using Kashkeshet.Common.Abstractions;
 using Kashkeshet.Common.KTP;
 using Server.BL.Abstractions;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Server.BL.Implementation
 {
@@ -15,9 +13,9 @@ namespace Server.BL.Implementation
         private IConverter<string, byte[]> _stringToByteArrayConverter;
 
         public ClientHandlerFactory(
-            IDictionary<string, IRequestHandler> requestHandlers, 
-            IWriter<string> outputWriter, 
-            IParser<IDictionary<string, string>> headersParser, 
+            IDictionary<string, IRequestHandler> requestHandlers,
+            IWriter<string> outputWriter,
+            IParser<IDictionary<string, string>> headersParser,
             IConverter<string, byte[]> stringToByteArrayConverter)
         {
             _requestHandlers = requestHandlers;

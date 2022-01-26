@@ -2,7 +2,6 @@
 using Kashkeshet.Common.KTP;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Client.ConsoleUI.Implementations
 {

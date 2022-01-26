@@ -3,7 +3,6 @@ using Kashkeshet.Common.DTO;
 using Kashkeshet.Common.KTP;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Kashkeshet.Common.Implementations
 {

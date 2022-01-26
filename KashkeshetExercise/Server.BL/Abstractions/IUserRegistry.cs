@@ -1,7 +1,4 @@
-﻿using Kashkeshet.Common.Abstractions;
-using Kashkeshet.Common.KTP;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Server.BL.Abstractions
 {

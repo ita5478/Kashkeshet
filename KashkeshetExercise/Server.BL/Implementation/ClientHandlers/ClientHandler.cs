@@ -1,9 +1,7 @@
 ﻿using Kashkeshet.Common.Abstractions;
 using Kashkeshet.Common.KTP;
 using Server.BL.Abstractions;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Server.BL.Implementation
@@ -11,14 +9,14 @@ namespace Server.BL.Implementation
     public class ClientHandler : IClientHandler
     {
         public bool IsActive { get; private set; }
-        
+
         private IWriterAsync<KTPPacket> _packetsWriter;
         private IReaderAsync<KTPPacket> _packetsReader;
         private IDictionary<string, IRequestHandler> _requestHandlingDictionary;
 
         public ClientHandler(
-            IWriterAsync<KTPPacket> packetsWriter, 
-            IReaderAsync<KTPPacket> packetsReader, 
+            IWriterAsync<KTPPacket> packetsWriter,
+            IReaderAsync<KTPPacket> packetsReader,
             IDictionary<string, IRequestHandler> requestHandlingDictionary)
         {
             _packetsWriter = packetsWriter;
@@ -35,7 +33,7 @@ namespace Server.BL.Implementation
             {
                 var incomingPacket = await _packetsReader.ReadAsync();
 
-                if(incomingPacket.PacketType is KTPPacketType.REQ)
+                if (incomingPacket.PacketType is KTPPacketType.REQ)
                 {
                     try
                     {

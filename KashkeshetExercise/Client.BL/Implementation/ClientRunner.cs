@@ -1,11 +1,8 @@
 ﻿using Client.BL.Abstractions;
 using Kashkeshet.Common.Abstractions;
-using Kashkeshet.Common.DTO;
 using Kashkeshet.Common.KTP;
-using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Client.BL.Implementation
@@ -19,10 +16,10 @@ namespace Client.BL.Implementation
         private IReader<KTPPacket> _inputReader;
 
         public ClientRunner(
-            IConnectionInitializer connectionInitializer, 
-            IServerNotificationsListener serverNotificationsListener, 
-            IConverter<string, byte[]> stringToByteArrayConverter, 
-            IParser<IDictionary<string, string>> headersParser, 
+            IConnectionInitializer connectionInitializer,
+            IServerNotificationsListener serverNotificationsListener,
+            IConverter<string, byte[]> stringToByteArrayConverter,
+            IParser<IDictionary<string, string>> headersParser,
             IReader<KTPPacket> inputReader)
         {
             _connectionInitializer = connectionInitializer;

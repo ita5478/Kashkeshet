@@ -1,8 +1,6 @@
 ﻿using Kashkeshet.Common.Abstractions;
 using Server.BL.Abstractions;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Server.BL.Implementation
 {
@@ -15,10 +13,10 @@ namespace Server.BL.Implementation
         private IWriter<string> _writer;
 
         public RegistryClientHandlerFactory(
-            IParser<IDictionary<string, string>> headersParser, 
-            IConverter<string, byte[]> stringToByteArrayConverter, 
-            IClientHandlerFactory clientHandlerFactory, 
-            IUserRegistry usersRegistry, 
+            IParser<IDictionary<string, string>> headersParser,
+            IConverter<string, byte[]> stringToByteArrayConverter,
+            IClientHandlerFactory clientHandlerFactory,
+            IUserRegistry usersRegistry,
             IWriter<string> writer)
         {
             _headersParser = headersParser;

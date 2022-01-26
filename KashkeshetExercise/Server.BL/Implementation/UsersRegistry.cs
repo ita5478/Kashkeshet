@@ -1,18 +1,13 @@
-﻿using Kashkeshet.Common.Abstractions;
-using Kashkeshet.Common.Implementations;
-using Kashkeshet.Common.KTP;
-using Server.BL.Abstractions;
-using System;
+﻿using Server.BL.Abstractions;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Server.BL.Implementation
 {
     public class UsersRegistry : IUserRegistry
     {
         private ConcurrentDictionary<string, IClientHandler> _registeredClients;
-        
+
         public UsersRegistry()
         {
             _registeredClients = new ConcurrentDictionary<string, IClientHandler>();

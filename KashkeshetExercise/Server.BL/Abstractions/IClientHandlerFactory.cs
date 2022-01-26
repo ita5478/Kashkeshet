@@ -1,5 +1,4 @@
 ﻿using Kashkeshet.Common.Abstractions;
-using Kashkeshet.Common.KTP;
 
 namespace Server.BL.Abstractions
 {

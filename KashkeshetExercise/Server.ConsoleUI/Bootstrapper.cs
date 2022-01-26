@@ -16,7 +16,7 @@ namespace Server.ConsoleUI
 
             var writer = new Implementation.ConsoleWriter();
             var headersParser = new HeadersParser();
-            
+
             var registry = new UsersRegistry();
             var messageBroadcaster = new MessageBroadcaster();
 
@@ -26,7 +26,7 @@ namespace Server.ConsoleUI
             };
 
             var clientHandlerFactory = new ClientHandlerFactory(requestHandlersDictionary, writer, headersParser, stringToByteArrayConverter);
-            var registryHandlerFactory = new RegistryClientHandlerFactory(headersParser, stringToByteArrayConverter, clientHandlerFactory, registry, writer);           
+            var registryHandlerFactory = new RegistryClientHandlerFactory(headersParser, stringToByteArrayConverter, clientHandlerFactory, registry, writer);
             var listener = new TcpSocketClientListener(writer, registryHandlerFactory);
 
             return listener;

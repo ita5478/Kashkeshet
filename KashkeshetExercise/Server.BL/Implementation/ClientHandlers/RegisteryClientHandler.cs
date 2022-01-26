@@ -1,9 +1,7 @@
 ﻿using Kashkeshet.Common.Abstractions;
 using Kashkeshet.Common.KTP;
 using Server.BL.Abstractions;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Server.BL.Implementation
@@ -18,11 +16,11 @@ namespace Server.BL.Implementation
         private IConverter<string, byte[]> _stringToByteArrayConverter;
 
         public RegisteryClientHandler(
-            IUserRegistry usersRegistry, 
-            IWriter<string> writer, 
-            ISocketStream socketStream, 
-            IClientHandlerFactory clientHandlerFactory, 
-            IParser<IDictionary<string, string>> headersParser, 
+            IUserRegistry usersRegistry,
+            IWriter<string> writer,
+            ISocketStream socketStream,
+            IClientHandlerFactory clientHandlerFactory,
+            IParser<IDictionary<string, string>> headersParser,
             IConverter<string, byte[]> stringToByteArrayConverter)
         {
             _usersRegistry = usersRegistry;
