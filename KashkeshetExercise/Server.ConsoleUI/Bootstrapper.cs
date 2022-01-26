@@ -1,6 +1,7 @@
 ﻿using Kashkeshet.Common.Implementations;
 using Server.BL.Abstractions;
 using Server.BL.Implementation;
+using Server.BL.Implementation.RequestHandlers;
 using System.Collections.Generic;
 
 namespace Server.ConsoleUI
@@ -9,14 +10,19 @@ namespace Server.ConsoleUI
     {
         public IClientListener Initialize()
         {
+            // Converters
+            var stringToByteArrayConverter = new StringToByteArrayConverter();
+            var chatMessageToPacketConverter = new ChatMessageToPacketConverter(stringToByteArrayConverter);
+
             var writer = new Implementation.ConsoleWriter();
             var headersParser = new HeadersParser();
-            var stringToByteArrayConverter = new StringToByteArrayConverter();
+            
             var registry = new UsersRegistry();
+            var messageBroadcaster = new MessageBroadcaster();
 
             var requestHandlersDictionary = new Dictionary<string, IRequestHandler>()
             {
-
+                {"send", new SendMessageRequestHandler(messageBroadcaster, registry, chatMessageToPacketConverter) }
             };
 
             var clientHandlerFactory = new ClientHandlerFactory(requestHandlersDictionary, writer, headersParser, stringToByteArrayConverter);
