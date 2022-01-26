@@ -1,5 +1,6 @@
 ﻿using Kashkeshet.Common.Abstractions;
 using Kashkeshet.Common.DTO;
+using Kashkeshet.Common.Enums;
 using Kashkeshet.Common.KTP;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,6 @@ namespace Kashkeshet.Common.Implementations
 {
     public class ChatMessageToPacketConverter : IConverter<ChatMessage, KTPPacket>
     {
-        private IConverter<string, byte[]> stringToByteArrayConverter;
-
-        public ChatMessageToPacketConverter(IConverter<string, byte[]> stringToByteArrayConverter)
-        {
-            this.stringToByteArrayConverter = stringToByteArrayConverter;
-        }
-
         public ChatMessage ConvertFrom(KTPPacket input)
         {
             try
@@ -43,8 +37,9 @@ namespace Kashkeshet.Common.Implementations
                     }
                 }
                 string sender = input.Headers["Sender"];
+                ContentType contentType = (ContentType) Enum.Parse(typeof(ContentType), input.Headers["Content-Type"]);
                 DateTime time = DateTime.Parse(input.Headers["Date"]);
-                return new ChatMessage(sender, channel, time, stringToByteArrayConverter.ConvertFrom(input.Content));
+                return new ChatMessage(sender, channel, time, input.Content, contentType);
             }
             catch (Exception e)
             {
@@ -58,7 +53,8 @@ namespace Kashkeshet.Common.Implementations
             {
                 {"Sender", input.Sender },
                 {"Date", input.TimeOfSending.ToLongDateString()},
-                {"Content-Length", input.Content.Length.ToString()}
+                {"Content-Length", input.Content.Length.ToString()},
+                {"Content-Type", input.ContentType.ToString() }
             };
 
             if (input.ChatName.Equals("Direct"))
@@ -70,7 +66,7 @@ namespace Kashkeshet.Common.Implementations
                 headers["Event-Type"] = "new-message";
             }
 
-            return new KTPPacket(KTPPacketType.PUSH, headers, stringToByteArrayConverter.ConvertTo(input.Content));
+            return new KTPPacket(KTPPacketType.PUSH, headers, input.Content);
         }
     }
 }
