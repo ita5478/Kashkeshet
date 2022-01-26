@@ -19,9 +19,32 @@ namespace Kashkeshet.Common.Implementations
         {
             try
             {
+                string channel = string.Empty;
+                if(input.PacketType is KTPPacketType.REQ)
+                {
+                    if (input.Headers["Request-Type"].Equals("send-direct"))
+                    {
+                        channel = "Direct";
+                    }
+                    else
+                    {
+                        channel = "General";
+                    }
+                }
+                else
+                {
+                    if (input.Headers["Event-Type"].Equals("new-direct"))
+                    {
+                        channel = "Direct";
+                    }
+                    else
+                    {
+                        channel = "General";
+                    }
+                }
                 string sender = input.Headers["Sender"];
                 DateTime time = DateTime.Parse(input.Headers["Date"]);
-                return new ChatMessage(sender, "General", time, stringToByteArrayConverter.ConvertFrom(input.Content));
+                return new ChatMessage(sender, channel, time, stringToByteArrayConverter.ConvertFrom(input.Content));
             }
             catch (Exception e)
             {
@@ -35,9 +58,17 @@ namespace Kashkeshet.Common.Implementations
             {
                 {"Sender", input.Sender },
                 {"Date", input.TimeOfSending.ToLongDateString()},
-                {"Event-Type", "new-message" },
                 {"Content-Length", input.Content.Length.ToString()}
             };
+
+            if (input.ChatName.Equals("Direct"))
+            {
+                headers["Event-Type"] = "new-direct";
+            }
+            else
+            {
+                headers["Event-Type"] = "new-message";
+            }
 
             return new KTPPacket(KTPPacketType.PUSH, headers, stringToByteArrayConverter.ConvertTo(input.Content));
         }
